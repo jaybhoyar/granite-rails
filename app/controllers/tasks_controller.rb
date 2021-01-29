@@ -4,6 +4,7 @@ class TasksController < ApplicationController
     tasks = Task.all
     render status: :ok, json: { tasks: tasks }
   end
+
   def create
     @task = Task.new(task_params)
     if @task.save
@@ -14,8 +15,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def show
+    task = Task.find(params[:id])
+    render status: :ok, json: { task: task }
+    rescue ActiveRecord::RecordNotFound => errors
+      render json: {errors: errors}, status: :not_found
+  end
+
   private
   def task_params
     params.require(:task).permit(:title)
   end
+
 end
