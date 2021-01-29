@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :load_task, only: [:show, :update]
+
   def index
     tasks = Task.all
     render status: :ok, json: { tasks: tasks }
@@ -16,15 +18,26 @@ class TasksController < ApplicationController
   end
 
   def show
-    task = Task.find(params[:id])
-    render status: :ok, json: { task: task }
-    rescue ActiveRecord::RecordNotFound => errors
-      render json: {errors: errors}, status: :not_found
+    render status: :ok, json: { task: @task }
+  end
+
+  def update
+    if @task.update(task_params)
+      render status: :ok, json: { notice: 'Successfully updated task.' }
+    else
+      render status: :unprocessable_entity, json: { errors: @task.errors.full_messages }
+    end
   end
 
   private
   def task_params
     params.require(:task).permit(:title)
+  end
+
+  def load_task
+    @task = Task.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => errors
+      render json: {errors: errors}
   end
 
 end
