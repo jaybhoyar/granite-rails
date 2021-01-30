@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const TableRow = ({ data, destroyTask, updateTask, showTask }) => {
-  console.log(data);
   return (
     <tbody className="bg-white divide-y divide-gray-200">
       {data.map((rowData) => (
