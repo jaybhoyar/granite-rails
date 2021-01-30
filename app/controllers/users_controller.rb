@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
   def index
-    @users = User.all(only: %i[id name])
-    puts @users
-    render status: :ok, json: { users: @users }
+    users = User.all.as_json(only: %i[id name])
+    puts users
+    render status: :ok, json: { users: users }
   end
 
   def create
@@ -15,5 +15,6 @@ class UsersController < ApplicationController
   def destroy
   end
 
+  private
 
 end
