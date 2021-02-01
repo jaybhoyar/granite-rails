@@ -1,4 +1,7 @@
 import axios from "axios";
+import { Toastr } from "components/Common/Toastr";
+
+
 axios.defaults.headers = {
   Accept: "applicaion/json",
   "Content-Type": "application/json",
@@ -34,4 +37,21 @@ export const registerIntercepts = () => {
   axios.interceptors.response.use(handleSuccessResponse, (error) =>
     handleErrorResponse(error)
   );
+};
+
+export const setAuthHeaders = (setLoading = () => null) => {
+  axios.defaults.headers = {
+    Accept: "applicaion/json",
+    "Content-Type": "application/json",
+    "X-CSRF-TOKEN": document
+      .querySelector('[name="csrf-token"]')
+      .getAttribute("content"),
+  };
+  const token = localStorage.getItem("authToken");
+  const email = localStorage.getItem("authEmail");
+  if (token && email) {
+    axios.defaults.headers["X-Auth-Email"] = email;
+    axios.defaults.headers["X-Auth-Token"] = token;
+  }
+  setLoading(false);
 };
