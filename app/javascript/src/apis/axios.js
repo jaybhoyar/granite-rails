@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Toastr } from "components/Common/Toastr";
 
-
 axios.defaults.headers = {
   Accept: "applicaion/json",
   "Content-Type": "application/json",
@@ -54,4 +53,9 @@ export const setAuthHeaders = (setLoading = () => null) => {
     axios.defaults.headers["X-Auth-Token"] = token;
   }
   setLoading(false);
+};
+
+export const resetAuthTokens = () => {
+  delete axios.defaults.headers["X-Auth-Email"];
+  delete axios.defaults.headers["X-Auth-Token"];
 };

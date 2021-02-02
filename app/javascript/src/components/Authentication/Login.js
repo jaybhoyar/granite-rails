@@ -21,7 +21,6 @@ const Login = () => {
       });
       setAuthHeaders();
       setLoading(false);
-      // history.push("/");
       window.location.href = "/";
     } catch (error) {
       console.log(error);
