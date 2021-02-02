@@ -48,7 +48,7 @@ const ShowTask = () => {
       setAssignedUser(response.data.assigned_user);
       setComments(response.data.comments);
     } catch (error) {
-      logger.error(error);
+      console.log(error);
     } finally {
       setPageLoading(false);
     }
@@ -63,7 +63,7 @@ const ShowTask = () => {
       fetchTaskDetails();
       setLoading(false);
     } catch (error) {
-      logger.error(error);
+      console.log(error);
       setLoading(false);
     }
   };

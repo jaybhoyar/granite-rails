@@ -3,8 +3,10 @@ class TasksController < ApplicationController
   before_action :load_task, only: %i[show update destroy]
 
   def index
-    @tasks = policy_scope(Task)
-    render status: :ok, json: { tasks: @tasks }
+    tasks = policy_scope(Task)
+    pending_tasks = tasks.pending
+    completed_tasks = tasks.completed
+    render status: :ok, json: { tasks: { pending: pending_tasks, completed: completed_tasks } }
   end
 
   def create
@@ -45,7 +47,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :user_id)
+    params.require(:task).permit(:title, :user_id, :progress)
   end
 
   def load_task

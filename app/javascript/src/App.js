@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(() => {
     registerIntercepts();
-    initializeLogger();
+    // initializeLogger();
     setAuthHeaders(setLoading);
   }, []);
 
