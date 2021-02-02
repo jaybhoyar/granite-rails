@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery prepend: true
+  protect_from_forgery with: :exception
+  include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :handle_unauthorized_user
+
   def activate_profiler
     ENV['RACK_MINI_PROFILER'] = 'on' if params['pp']
     ENV['RACK_MINI_PROFILER'] = 'off' if params['pp'] == 'disabled'
@@ -26,4 +29,8 @@ class ApplicationController < ActionController::Base
     def current_user
       @current_user
     end
+
+    def handle_unauthorized_user
+      render json: { error: "Permission Denied" }, status: :forbidden
+  end
 end

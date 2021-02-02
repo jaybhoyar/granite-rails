@@ -16,7 +16,7 @@ const Dashboard = ({ history }) => {
       setTasks(response.data.tasks);
       setLoading(false);
     } catch (error) {
-      logger.error(error);
+      console.log(error);
       setLoading(false);
     }
   };
