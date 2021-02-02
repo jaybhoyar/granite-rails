@@ -20,7 +20,7 @@ class TasksController < ApplicationController
 
   def show
     authorize @task
-    comments = @task.comments.reverse
+    comments = @task.comments.order('created_at DESC')
     render status: :ok, json: { task: @task, assigned_user: @task.user, comments: comments}
   end
 
